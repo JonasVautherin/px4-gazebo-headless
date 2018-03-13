@@ -29,8 +29,7 @@ RUN ["/bin/bash", "-c", " \
     DONT_RUN=1 make posix gazebo_iris \
 "]
 
-ENTRYPOINT ["/bin/bash", "-c", " \
-    source ${WORKSPACE_DIR}/edit_iris_config.bash && \
-    cd ${FIRMWARE_DIR} && \
-    HEADLESS=1 make posix gazebo_iris \
-"]
+COPY entrypoint.sh /root/entrypoint.sh
+RUN chmod +x /root/entrypoint.sh
+
+ENTRYPOINT ["/root/entrypoint.sh"]
