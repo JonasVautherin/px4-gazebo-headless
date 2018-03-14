@@ -29,3 +29,22 @@ $ docker run --rm -it px4-gazebo-headless 192.168.0.10 10.0.0.12
 ```
 
 where `192.168.0.10` should be replaced by the IP listening on the QGC port (e.g. QGroundControl) and `10.0.0.12` should be replaced by the IP listening on the API port (e.g. DroneCore or Mavros).
+
+### Troubleshooting
+
+#### I cannot build the image
+
+__Problem:__
+
+Building the image fails with the following error:
+
+```
+c++: internal compiler error: Killed (program cc1plus)
+Please submit a full bug report,
+with preprocessed source if appropriate.
+See <file:///usr/share/doc/gcc-5/README.Bugs> for instructions.
+```
+
+__Possible solution:__
+
+If running on Docker for Mac, try to increase the memory in _Preferences > Advanced > Memory_. Increasing from 2GB to 4GB solved the problem for me.
