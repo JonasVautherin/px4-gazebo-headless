@@ -6,6 +6,18 @@
 $ docker build https://github.com/JonasVautherin/docker.git#master:px4-gazebo-headless -t px4-gazebo-headless
 ```
 
+The starting location of the drone can be set at build time using build arguments (by default the drone is in Zuerich). The possible build arguments are:
+
+* __HOME_LAT:__ starting latitude of the drone (defaults to 47.397742).
+* __HOME_LNG:__ starting longitude of the drone (defaults to 8.545594).
+* __HOME_ALT:__ starting altitude of the drone (defaults to 488.0).
+
+Build arguments can be added to the above command line as follows:
+
+```
+$ docker build https://github.com/JonasVautherin/docker.git#master:px4-gazebo-headless --build-arg HOME_LAT=37.873350 --build-arg HOME_LNG=-122.302525 --build-arg HOME_ALT=20 -t px4-gazebo-headless
+```
+
 ### Run it in BROADCAST mode:
 
 ```

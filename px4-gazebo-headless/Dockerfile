@@ -22,8 +22,19 @@ RUN sed -i "s/GZ_VER=9/GZ_VER=8/" /tmp/install_gazebosim.sh
 RUN chmod +x /tmp/install_gazebosim.sh
 RUN /tmp/install_gazebosim.sh
 
-RUN git clone https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
+RUN git clone --depth 1 https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
+
+# Initial location of the drone
+ARG HOME_LAT=47.397742
+ARG HOME_LNG=8.545594
+ARG HOME_ALT=488.0
+
+COPY custom_home.patch ${WORKSPACE_DIR}
+RUN sed -i "s/%CUSTOM_LAT%/${HOME_LAT}/" ${WORKSPACE_DIR}/custom_home.patch
+RUN sed -i "s/%CUSTOM_LNG%/${HOME_LNG}/" ${WORKSPACE_DIR}/custom_home.patch
+RUN sed -i "s/%CUSTOM_ALT%/${HOME_ALT}/" ${WORKSPACE_DIR}/custom_home.patch
+RUN git -C ${FIRMWARE_DIR}/Tools/sitl_gazebo/ apply ${WORKSPACE_DIR}/custom_home.patch
 
 COPY edit_iris_config.bash ${WORKSPACE_DIR}
 COPY entrypoint.sh /root/entrypoint.sh
@@ -31,6 +42,7 @@ RUN chmod +x /root/entrypoint.sh
 
 RUN ["/bin/bash", "-c", " \
     cd ${FIRMWARE_DIR} && \
+    DONT_RUN=1 make posix gazebo_iris && \
     DONT_RUN=1 make posix gazebo_iris \
 "]
 
