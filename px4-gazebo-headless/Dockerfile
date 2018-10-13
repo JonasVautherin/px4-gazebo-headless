@@ -22,7 +22,7 @@ RUN sed -i "s/GZ_VER=9/GZ_VER=8/" /tmp/install_gazebosim.sh
 RUN chmod +x /tmp/install_gazebosim.sh
 RUN /tmp/install_gazebosim.sh
 
-RUN git clone --depth 1 https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
+RUN git clone --single-branch -b v1.8.0 --depth 1 https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
 # Initial location of the drone
