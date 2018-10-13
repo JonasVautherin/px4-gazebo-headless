@@ -15,6 +15,7 @@ RUN apt-get update && \
                        python-jinja2 \
                        python-numpy \
                        python-toml \
+                       python-yaml \
                        unzip
 
 RUN curl -ssL http://get.gazebosim.org > /tmp/install_gazebosim.sh
