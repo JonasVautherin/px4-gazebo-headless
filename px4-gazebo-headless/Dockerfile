@@ -28,14 +28,11 @@ RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
 # Initial location of the drone
 ARG HOME_LAT=47.397742
-ARG HOME_LNG=8.545594
+ENV PX4_HOME_LAT=${HOME_LAT}
+ARG HOME_LON=8.545594
+ENV PX4_HOME_LON=${HOME_LON}
 ARG HOME_ALT=488.0
-
-COPY custom_home.patch ${WORKSPACE_DIR}
-RUN sed -i "s/%CUSTOM_LAT%/${HOME_LAT}/" ${WORKSPACE_DIR}/custom_home.patch
-RUN sed -i "s/%CUSTOM_LNG%/${HOME_LNG}/" ${WORKSPACE_DIR}/custom_home.patch
-RUN sed -i "s/%CUSTOM_ALT%/${HOME_ALT}/" ${WORKSPACE_DIR}/custom_home.patch
-RUN git -C ${FIRMWARE_DIR}/Tools/sitl_gazebo/ apply ${WORKSPACE_DIR}/custom_home.patch
+ENV PX4_HOME_ALT=${HOME_LAT}
 
 COPY edit_rcS.bash ${WORKSPACE_DIR}
 COPY entrypoint.sh /root/entrypoint.sh
