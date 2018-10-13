@@ -37,7 +37,7 @@ RUN sed -i "s/%CUSTOM_LNG%/${HOME_LNG}/" ${WORKSPACE_DIR}/custom_home.patch
 RUN sed -i "s/%CUSTOM_ALT%/${HOME_ALT}/" ${WORKSPACE_DIR}/custom_home.patch
 RUN git -C ${FIRMWARE_DIR}/Tools/sitl_gazebo/ apply ${WORKSPACE_DIR}/custom_home.patch
 
-COPY edit_iris_config.bash ${WORKSPACE_DIR}
+COPY edit_rcS.bash ${WORKSPACE_DIR}
 COPY entrypoint.sh /root/entrypoint.sh
 RUN chmod +x /root/entrypoint.sh
 
