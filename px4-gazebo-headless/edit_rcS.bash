@@ -45,9 +45,9 @@ if is_docker_for_mac; then
     API_PARAM=${API_PARAM:-"-t ${MAC_HOST}"}
 fi
 
-IRIS_CONFIG_FILE=${FIRMWARE_DIR}/posix-configs/SITL/init/ekf2/iris
+CONFIG_FILE=${FIRMWARE_DIR}/ROMFS/px4fmu_common/init.d-posix/rcS
 
-sed -i "s/mavlink start \-x \-u 14556 -r 4000000$/mavlink start \-x -u 14556 -r 4000000 ${QGC_PARAM}/" ${IRIS_CONFIG_FILE}
-sed -i "s/mavlink start \-x \-u 14557 -r 4000000 -m onboard -o 14540$/mavlink start \-x -u 14557 -r 4000000 -o 14540 ${API_PARAM}/" ${IRIS_CONFIG_FILE}
+sed -i "s/mavlink start \-x \-u \$udp_gcs_port_local -r 4000000/mavlink start -x -u \$udp_gcs_port_local -r 4000000 ${QGC_PARAM}/" ${CONFIG_FILE}
+sed -i "s/mavlink start \-x \-u \$udp_offboard_port_local -r 4000000 -m onboard -o \$udp_offboard_port_remote/mavlink start -x -u \$udp_offboard_port_local -r 4000000 -o \$udp_offboard_port_remote ${API_PARAM}/" ${CONFIG_FILE}
 
-echo 'param set MAV_BROADCAST 1' >> ${IRIS_CONFIG_FILE}
+echo 'param set MAV_BROADCAST 1' >> ${CONFIG_FILE}
