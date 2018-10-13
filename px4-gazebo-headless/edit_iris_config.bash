@@ -48,6 +48,6 @@ fi
 CONFIG_FILE=${FIRMWARE_DIR}/ROMFS/px4fmu_common/init.d-posix/rcS
 
 sed -i "s/mavlink start \-x \-u \$udp_gcs_port_local -r 4000000/mavlink start -x -u \$udp_gcs_port_local -r 4000000 ${QGC_PARAM}/" ${CONFIG_FILE}
-sed -i "s/mavlink start \-x \-u \$udp_offboard_port_local -r 4000000 -m onboard -o $udp_offboard_port_remote/mavlink start -x -u \$udp_offboard_port_local -r 4000000 -o $udp_offboard_port_remote ${API_PARAM}/" ${CONFIG_FILE}
+sed -i "s/mavlink start \-x \-u \$udp_offboard_port_local -r 4000000 -m onboard -o \$udp_offboard_port_remote/mavlink start -x -u \$udp_offboard_port_local -r 4000000 -o \$udp_offboard_port_remote ${API_PARAM}/" ${CONFIG_FILE}
 
 echo 'param set MAV_BROADCAST 1' >> ${CONFIG_FILE}
