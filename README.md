@@ -1,9 +1,63 @@
 # PX4-Gazebo simulator (headless)
 
+## Quickstart
+
+The Docker images resulting from this repo are available on [Docker Hub](https://hub.docker.com/r/jonasvautherin/px4-gazebo-headless/).
+
+Note that the following commands are referring to the latest supported release of PX4, which is currently v1.8.0.
+
+### Run in BROADCAST mode:
+
+In this mode, the simulator will be available from your host (e.g. run the following command, and QGroundControl running on your computer will connect automatically).
+
+```
+$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.8.0
+```
+
+`MAV_BROADCAST` is enabled by default, and the second MAVLink interface is not run in "onboard" mode in order to enable the broadcasting. Those changes are made by [edit_rcS.bash](edit_rcS.bash).
+
+### Run with a custom IP for the second mavlink interface
+
+This mode is useful for running QGroundControl on the computer running docker, and the offboard app (e.g. using the SDK) on another device (e.g. a phone).
+
+```
+$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.8.0 192.168.0.12
+```
+
+where `192.168.0.12` should be replaced by the IP listening on the API port 14540 (e.g. SDK or Mavros).
+
+### Run with custom IP for both mavlink interfaces
+
+This mode is useful for running both QGroundControl and the offboard app (e.g. using the SDK) on another device than the one running docker.
+
+```
+$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.8.0 192.168.0.10 10.0.0.12
+```
+
+where `192.168.0.10` should be replaced by the IP listening on the QGC port (e.g. QGroundControl) and `10.0.0.12` should be replaced by the IP listening on the API port (e.g. DroneCore or Mavros).
+
+### Run with another start location
+
+The start location can be set when running the container by setting the following environment variables:
+
+* __PX4_HOME_LAT:__ starting latitude of the drone.
+* __PX4_HOME_LON:__ starting longitude of the drone.
+* __PX4_HOME_ALT:__ starting altitude of the drone.
+
+For instance:
+
+```
+$ docker run --rm -it --env PX4_HOME_LAT=47.397742 --env PX4_HOME_LON=8.545594 --env PX4_HOME_ALT=488.0 jonasvautherin/px4-gazebo-headless:v1.8.0
+```
+
+## Manual build
+
+Note that a clean build from the `master` branch will pull the latest upstream from the PX4 repository (as can be seen [here](https://github.com/JonasVautherin/px4-gazebo-headless/blob/master/Dockerfile#L26)). In order to build a stable version, change `master` for a tag (e.g. `v1.8.0`) in the following commands.
+
 ### Build the image from this git repository:
 
 ```
-$ docker build https://github.com/JonasVautherin/docker.git#master:px4-gazebo-headless -t px4-gazebo-headless
+$ docker build https://github.com/JonasVautherin/px4-gazebo-headless.git#master -t px4-gazebo-headless
 ```
 
 The starting location of the drone can be set at build time using build arguments (by default the drone is in Zuerich). The possible build arguments are:
@@ -15,45 +69,7 @@ The starting location of the drone can be set at build time using build argument
 Build arguments can be added to the above command line as follows:
 
 ```
-$ docker build https://github.com/JonasVautherin/docker.git#master:px4-gazebo-headless --build-arg HOME_LAT=37.873350 --build-arg HOME_LON=-122.302525 --build-arg HOME_ALT=20 -t px4-gazebo-headless
-```
-
-### Run it in BROADCAST mode:
-
-```
-$ docker run --rm -it px4-gazebo-headless
-```
-
-`MAV_BROADCAST` is enabled by default, and the second MAVLink interface is not run in "onboard" mode in order to enable the broadcasting. Those changes are made by [edit_rcS.bash](edit_rcS.bash).
-
-### Run it with a custom IP for the second mavlink interface
-
-```
-$ docker run --rm -it px4-gazebo-headless 192.168.0.12
-```
-
-where `192.168.0.12` should be replaced by the IP listening on the API port 14540 (e.g. DroneCore or Mavros).
-
-### Run it with custom IP for both mavlink interfaces
-
-```
-$ docker run --rm -it px4-gazebo-headless 192.168.0.10 10.0.0.12
-```
-
-where `192.168.0.10` should be replaced by the IP listening on the QGC port (e.g. QGroundControl) and `10.0.0.12` should be replaced by the IP listening on the API port (e.g. DroneCore or Mavros).
-
-### Run with another start location
-
-The start location of the drone can be set at build time (see instructions above), but also when running the container. For this, set the following environment variables:
-
-* __PX4_HOME_LAT:__ starting latitude of the drone.
-* __PX4_HOME_LON:__ starting longitude of the drone.
-* __PX4_HOME_ALT:__ starting altitude of the drone.
-
-For instance:
-
-```
-$ docker run --rm -it --env PX4_HOME_LAT=47.397742 --env PX4_HOME_LON=8.545594 --env PX4_HOME_ALT=488.0 px4-gazebo-headless
+$ docker build https://github.com/JonasVautherin/px4-gazebo-headless.git#master --build-arg HOME_LAT=37.873350 --build-arg HOME_LON=-122.302525 --build-arg HOME_ALT=20 -t px4-gazebo-headless
 ```
 
 ### Troubleshooting
