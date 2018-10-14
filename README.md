@@ -3,7 +3,7 @@
 ### Build the image from this git repository:
 
 ```
-$ docker build https://github.com/JonasVautherin/docker.git#master:px4-gazebo-headless -t px4-gazebo-headless
+$ docker build https://github.com/JonasVautherin/px4-gazebo-headless.git#v1.8.0 -t px4-gazebo-headless:v1.8.0
 ```
 
 The starting location of the drone can be set at build time using build arguments (by default the drone is in Zuerich). The possible build arguments are:
@@ -15,7 +15,7 @@ The starting location of the drone can be set at build time using build argument
 Build arguments can be added to the above command line as follows:
 
 ```
-$ docker build https://github.com/JonasVautherin/docker.git#master:px4-gazebo-headless --build-arg HOME_LAT=37.873350 --build-arg HOME_LON=-122.302525 --build-arg HOME_ALT=20 -t px4-gazebo-headless
+$ docker build https://github.com/JonasVautherin/px4-gazebo-headless.git#v1.8.0 --build-arg HOME_LAT=37.873350 --build-arg HOME_LON=-122.302525 --build-arg HOME_ALT=20 -t px4-gazebo-headless:v1.8.0
 ```
 
 ### Run it in BROADCAST mode:
