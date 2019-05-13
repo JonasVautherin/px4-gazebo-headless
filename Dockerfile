@@ -31,8 +31,8 @@ RUN chmod +x /root/entrypoint.sh
 
 RUN ["/bin/bash", "-c", " \
     cd ${FIRMWARE_DIR} && \
-    DONT_RUN=1 make posix gazebo_iris && \
-    DONT_RUN=1 make posix gazebo_iris \
+    DONT_RUN=1 make px4_sitl gazebo && \
+    DONT_RUN=1 make px4_sitl gazebo \
 "]
 
 ENTRYPOINT ["/root/entrypoint.sh"]
