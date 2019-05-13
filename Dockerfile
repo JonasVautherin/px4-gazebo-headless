@@ -1,7 +1,9 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV WORKSPACE_DIR /root
 ENV FIRMWARE_DIR ${WORKSPACE_DIR}/Firmware
+
+ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
 RUN apt-get update && \
     apt-get install -y cmake \
@@ -16,12 +18,9 @@ RUN apt-get update && \
                        python-numpy \
                        python-toml \
                        python-yaml \
-                       unzip
-
-RUN curl -ssL http://get.gazebosim.org > /tmp/install_gazebosim.sh
-RUN sed -i "s/GZ_VER=9/GZ_VER=8/" /tmp/install_gazebosim.sh
-RUN chmod +x /tmp/install_gazebosim.sh
-RUN /tmp/install_gazebosim.sh
+                       unzip \
+                       gazebo9 \
+                       libgazebo9-dev
 
 RUN git clone --depth 1 https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
