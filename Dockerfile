@@ -25,14 +25,6 @@ RUN apt-get update && \
 RUN git clone --depth 1 https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
-# Initial location of the drone
-ARG HOME_LAT=47.397742
-ENV PX4_HOME_LAT=${HOME_LAT}
-ARG HOME_LON=8.545594
-ENV PX4_HOME_LON=${HOME_LON}
-ARG HOME_ALT=488.0
-ENV PX4_HOME_ALT=${HOME_LAT}
-
 COPY edit_rcS.bash ${WORKSPACE_DIR}
 COPY entrypoint.sh /root/entrypoint.sh
 RUN chmod +x /root/entrypoint.sh
