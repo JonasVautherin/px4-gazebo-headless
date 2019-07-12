@@ -22,7 +22,8 @@ RUN apt-get update && \
                        gazebo9 \
                        libgazebo9-dev
 
-RUN git clone --depth 1 https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
+RUN git clone https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
+RUN git -C ${FIRMWARE_DIR} checkout stable
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
 COPY edit_rcS.bash ${WORKSPACE_DIR}
