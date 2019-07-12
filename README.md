@@ -4,37 +4,37 @@
 
 The Docker images resulting from this repo are available on [Docker Hub](https://hub.docker.com/r/jonasvautherin/px4-gazebo-headless/).
 
-Note that the following commands are referring to the latest supported release of PX4, which is currently v1.8.0.
+Note that the following commands are referring to the latest supported release of PX4, which is currently v1.9.2.
 
 ### Run in BROADCAST mode:
 
 In this mode, the simulator will be available from your host (e.g. run the following command, and QGroundControl running on your computer will connect automatically).
 
 ```
-$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.8.0
+$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.9.2
 ```
 
 `MAV_BROADCAST` is enabled by default, and the second MAVLink interface is not run in "onboard" mode in order to enable the broadcasting. Those changes are made by [edit_rcS.bash](edit_rcS.bash).
 
-### Run with a custom IP for the second mavlink interface
+### Run with a custom IP for the second MAVLink interface
 
-This mode is useful for running QGroundControl on the computer running docker, and the offboard app (e.g. using the SDK) on another device (e.g. a phone).
-
-```
-$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.8.0 192.168.0.12
-```
-
-where `192.168.0.12` should be replaced by the IP listening on the API port 14540 (e.g. SDK or Mavros).
-
-### Run with custom IP for both mavlink interfaces
-
-This mode is useful for running both QGroundControl and the offboard app (e.g. using the SDK) on another device than the one running docker.
+This mode is useful for running QGroundControl on the computer running docker, and the offboard app (e.g. using MAVSDK) on another device (e.g. a phone).
 
 ```
-$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.8.0 192.168.0.10 10.0.0.12
+$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.9.2 192.168.0.12
 ```
 
-where `192.168.0.10` should be replaced by the IP listening on the QGC port (e.g. QGroundControl) and `10.0.0.12` should be replaced by the IP listening on the API port (e.g. DroneCore or Mavros).
+where `192.168.0.12` should be replaced by the IP listening on the API port 14540 (e.g. MAVSDK or MAVROS).
+
+### Run with custom IP for both MAVLink interfaces
+
+This mode is useful for running both QGroundControl and the offboard app (e.g. using MAVSDK) on another device than the one running docker.
+
+```
+$ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.9.2 192.168.0.10 10.0.0.12
+```
+
+where `192.168.0.10` should be replaced by the IP listening on the QGC port (e.g. QGroundControl) and `10.0.0.12` should be replaced by the IP listening on the API port (e.g. MAVSDK or MAVROS).
 
 ### Run with another start location
 
@@ -47,12 +47,12 @@ The start location can be set when running the container by setting the followin
 For instance:
 
 ```
-$ docker run --rm -it --env PX4_HOME_LAT=47.397742 --env PX4_HOME_LON=8.545594 --env PX4_HOME_ALT=488.0 jonasvautherin/px4-gazebo-headless:v1.8.0
+$ docker run --rm -it --env PX4_HOME_LAT=47.397742 --env PX4_HOME_LON=8.545594 --env PX4_HOME_ALT=488.0 jonasvautherin/px4-gazebo-headless:v1.9.2
 ```
 
 ## Manual build
 
-Note that a clean build from the `master` branch will pull the latest upstream from the PX4 repository (as can be seen [here](https://github.com/JonasVautherin/px4-gazebo-headless/blob/master/Dockerfile#L26)). In order to build a stable version, change `master` for a tag (e.g. `v1.8.0`) in the following commands.
+Note that a clean build from the `master` branch will pull the latest upstream from the PX4 repository (as can be seen [here](https://github.com/JonasVautherin/px4-gazebo-headless/blob/master/Dockerfile#L26)). In order to build a stable version, change `master` for a tag (e.g. `v1.9.2`) in the following commands.
 
 ### Build the image from this git repository:
 
