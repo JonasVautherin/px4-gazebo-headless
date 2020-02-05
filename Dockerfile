@@ -6,7 +6,8 @@ ENV FIRMWARE_DIR ${WORKSPACE_DIR}/Firmware
 ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
 RUN apt-get update && \
-    apt-get install -y cmake \
+    apt-get install -y bc \
+                       cmake \
                        curl \
                        git \
                        libeigen3-dev \
@@ -20,7 +21,13 @@ RUN apt-get update && \
                        python-yaml \
                        unzip \
                        gazebo9 \
-                       libgazebo9-dev
+                       libgazebo9-dev \
+                       gstreamer1.0-plugins-base \
+                       gstreamer1.0-plugins-good \
+                       libgstreamer-plugins-base1.0-dev && \
+    apt-get -y autoremove && \
+    apt-get clean autoclean && \
+    rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
 RUN git clone https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
 RUN git -C ${FIRMWARE_DIR} checkout stable
