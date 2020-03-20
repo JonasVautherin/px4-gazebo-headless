@@ -1,0 +1,33 @@
+name: Publish Docker
+on:
+  push:
+    branches:
+      - 'master'
+    tags:
+      - 'v*'
+
+jobs:
+  publish-latest:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: HurricanKai/Publish-Docker-Github-Action@master
+      with:
+        name: jonasvautherin/px4-gazebo-headless
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+
+  publish-tag:
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'refs/tags/')
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: HurricanKai/Publish-Docker-Github-Action@master
+      with:
+        name: jonasvautherin/px4-gazebo-headless
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        tagging: true
