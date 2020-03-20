@@ -11,7 +11,7 @@ Note that the following commands are referring to the latest supported release o
 In this mode, the simulator will be available from your host (e.g. run the following command, and QGroundControl running on your computer will connect automatically).
 
 ```
-docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.10.1
+docker run --rm -it jonasvautherin/px4-gazebo-headless:1.10.1
 ```
 
 `MAV_BROADCAST` is enabled by default, and the second MAVLink interface is not run in "onboard" mode in order to enable the broadcasting. Those changes are made by [edit_rcS.bash](edit_rcS.bash).
@@ -21,7 +21,7 @@ docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.10.1
 This mode is useful for running QGroundControl on the computer running docker, and the offboard app (e.g. using MAVSDK) on another device (e.g. a phone).
 
 ```
-docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.10.1 192.168.0.12
+docker run --rm -it jonasvautherin/px4-gazebo-headless:1.10.1 192.168.0.12
 ```
 
 where `192.168.0.12` should be replaced by the IP listening on the API port 14540 (e.g. MAVSDK or MAVROS).
@@ -31,7 +31,7 @@ where `192.168.0.12` should be replaced by the IP listening on the API port 1454
 This mode is useful for running both QGroundControl and the offboard app (e.g. using MAVSDK) on another device than the one running docker.
 
 ```
-docker run --rm -it jonasvautherin/px4-gazebo-headless:v1.10.1 192.168.0.10 10.0.0.12
+docker run --rm -it jonasvautherin/px4-gazebo-headless:1.10.1 192.168.0.10 10.0.0.12
 ```
 
 where `192.168.0.10` should be replaced by the IP listening on the QGC port (e.g. QGroundControl) and `10.0.0.12` should be replaced by the IP listening on the API port (e.g. MAVSDK or MAVROS).
