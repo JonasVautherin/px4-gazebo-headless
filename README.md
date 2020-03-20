@@ -90,3 +90,5 @@ See <file:///usr/share/doc/gcc-5/README.Bugs> for instructions.
 __Possible solution:__
 
 If running on Docker for Mac, try to increase the memory in _Preferences > Advanced > Memory_. Increasing from 2GB to 4GB solved the problem for me.
+
+If running on Docker for Windows, you can do it by right clicking on the Docker icon on the task bar and going into _Settings > Resources > Advanced > Memory_.
