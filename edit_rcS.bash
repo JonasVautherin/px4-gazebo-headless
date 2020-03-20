@@ -9,18 +9,18 @@ function is_ip_valid {
     fi
 }
 
-function is_docker_for_mac {
-    getent hosts docker.for.mac.host.internal >/dev/null 2>&1
+function is_docker_vm {
+    getent hosts host.docker.internal >/dev/null 2>&1
     return $?
 }
 
-function get_mac_host_ip {
-    if ! is_docker_for_mac; then
-        echo "ERROR: this is not a docker for mac container!"
+function get_vm_host_ip {
+    if ! is_docker_vm; then
+        echo "ERROR: this is not running from a docker VM!"
         exit 1
     fi
 
-    echo "$(getent hosts docker.for.mac.host.internal | awk '{ print $1 }')"
+    echo "$(getent hosts host.docker.internal | awk '{ print $1 }')"
 }
 
 if [ "$#" -eq 1 ]; then
@@ -38,11 +38,11 @@ elif [ "$#" -gt 2 ]; then
     exit 1;
 fi
 
-# Broadcast doesn't work with docker for mac, so we default to the mac host (docker.for.mac.localhost)
-if is_docker_for_mac; then
-    MAC_HOST=$(get_mac_host_ip)
-    QGC_PARAM=${QGC_PARAM:-"-t ${MAC_HOST}"}
-    API_PARAM=${API_PARAM:-"-t ${MAC_HOST}"}
+# Broadcast doesn't work with docker from a VM (macOS or Windows), so we default to the vm host (host.docker.internal)
+if is_docker_vm; then
+    VM_HOST=$(get_vm_host_ip)
+    QGC_PARAM=${QGC_PARAM:-"-t ${VM_HOST}"}
+    API_PARAM=${API_PARAM:-"-t ${VM_HOST}"}
 fi
 
 CONFIG_FILE=${FIRMWARE_DIR}/ROMFS/px4fmu_common/init.d-posix/rcS
