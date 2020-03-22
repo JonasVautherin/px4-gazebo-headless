@@ -93,9 +93,11 @@ If running on Docker for Mac, try to increase the memory in _Preferences > Advan
 
 If running on Docker for Windows, you can do it by right clicking on the Docker icon on the task bar and going into _Settings > Resources > Advanced > Memory_.
 
+#### It doesn't work with Docker Toolbox
+
 __Problem:__
 
-Using Docker Toolbox (instead of Docker for Windows/Mac), px4-gazebo-headless is not detected by QGroundControl running on the host.
+Using Docker Toolbox (instead of Docker for Windows/Mac, for instance on Windows 10 Home), px4-gazebo-headless is not detected by QGroundControl running on the host.
 
 __Solution:__
 
