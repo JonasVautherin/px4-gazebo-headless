@@ -92,3 +92,15 @@ __Possible solution:__
 If running on Docker for Mac, try to increase the memory in _Preferences > Advanced > Memory_. Increasing from 2GB to 4GB solved the problem for me.
 
 If running on Docker for Windows, you can do it by right clicking on the Docker icon on the task bar and going into _Settings > Resources > Advanced > Memory_.
+
+__Problem:__
+
+Using Docker Toolbox (instead of Docker for Windows/Mac), px4-gazebo-headless is not detected by QGroundControl running on the host.
+
+__Solution:__
+
+The container automatically detects if it is running inside Docker for Windows/Mac, but not if it is inside Docker Toolbox (let me know if you have a way to detect this). However, it seems that in Docker Toolbox, the host is assigned 10.0.2.2 by default (I am guessing this default is coming from VirtualBox). Therefore it works to redirect to this IP, as described above. For instance:
+
+```
+docker run --rm -it jonasvautherin/px4-gazebo-headless:1.10.1 10.0.2.2 10.0.2.2
+```
