@@ -41,7 +41,7 @@ RUN pip3 install empy \
                  pyyaml
 
 RUN git clone https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
-RUN git -C ${FIRMWARE_DIR} checkout master
+RUN git -C ${FIRMWARE_DIR} checkout v1.11.0
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
 COPY edit_rcS.bash ${WORKSPACE_DIR}
