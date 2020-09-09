@@ -1,3 +1,6 @@
+[![GitHub Actions Status](https://github.com/jonasvautherin/px4-gazebo-headless/workflows/Publish%20Docker/badge.svg?branch=master)](https://github.com/jonasvautherin/px4-gazebo-headless)
+
+
 # PX4-Gazebo simulator (headless)
 
 ## Quickstart
