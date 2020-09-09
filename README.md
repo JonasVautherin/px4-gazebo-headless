@@ -1,4 +1,4 @@
-[![GitHub Actions Status](https://github.com/jonasvautherin/px4-gazebo-headless/workflows/Publish%20Docker/badge.svg?branch=master)](https://github.com/jonasvautherin/px4-gazebo-headless)
+[![GitHub Actions Status](https://github.com/jonasvautherin/px4-gazebo-headless/workflows/Publish%20Docker/badge.svg?branch=master)](https://github.com/jonasvautherin/px4-gazebo-headless)[![Docker pulls](https://img.shields.io/docker/pulls/jonasvautherin/px4-gazebo-headless)](https://hub.docker.com/r/jonasvautherin/px4-gazebo-headless/)[![DockerHub version](https://img.shields.io/docker/v/jonasvautherin/px4-gazebo-headless/1.11.0)](https://hub.docker.com/r/jonasvautherin/px4-gazebo-headless/)
 
 
 # PX4-Gazebo simulator (headless)
