@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM px4io/px4-dev-simulation-bionic:2020-09-14
 
 ENV WORKSPACE_DIR /root
 ENV FIRMWARE_DIR ${WORKSPACE_DIR}/Firmware
@@ -9,36 +9,12 @@ ENV DISPLAY :99
 ENV LANG C.UTF-8
 
 RUN apt-get update && \
-    apt-get install -y bc \
-                       cmake \
-                       curl \
-                       git \
-                       libeigen3-dev \
-                       libopencv-dev \
-                       libroscpp-dev \
-                       protobuf-compiler \
-                       python3-pip \
-                       unzip \
-                       gazebo9 \
-                       libgazebo9-dev \
-                       gstreamer1.0-plugins-bad \
-                       gstreamer1.0-plugins-base \
-                       gstreamer1.0-plugins-good \
-                       gstreamer1.0-plugins-ugly \
-                       libgstreamer-plugins-base1.0-dev \
-                       libgstrtspserver-1.0-dev \
+    apt-get install -y libgstrtspserver-1.0-dev \
+                       host \
                        xvfb && \
     apt-get -y autoremove && \
     apt-get clean autoclean && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
-
-RUN pip3 install empy \
-                 jinja2 \
-                 numpy \
-                 packaging \
-                 pyros-genmsg \
-                 toml \
-                 pyyaml
 
 RUN git clone https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
 RUN git -C ${FIRMWARE_DIR} checkout master
