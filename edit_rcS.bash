@@ -45,7 +45,7 @@ if is_docker_vm; then
     API_PARAM=${API_PARAM:-"-t ${VM_HOST}"}
 fi
 
-CONFIG_FILE=${FIRMWARE_DIR}/ROMFS/px4fmu_common/init.d-posix/rcS
+CONFIG_FILE=${FIRMWARE_DIR}/build/px4_sitl_default/etc/init.d-posix/rcS
 
 sed -i "s/mavlink start \-x \-u \$udp_gcs_port_local -r 4000000/mavlink start -x -u \$udp_gcs_port_local -r 4000000 ${QGC_PARAM}/" ${CONFIG_FILE}
 sed -i "s/mavlink start \-x \-u \$udp_offboard_port_local -r 4000000 -m onboard -o \$udp_offboard_port_remote/mavlink start -x -u \$udp_offboard_port_local -r 4000000 -o \$udp_offboard_port_remote ${API_PARAM}/" ${CONFIG_FILE}
