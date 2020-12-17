@@ -27,14 +27,14 @@ RUN apt-get update && \
                        gstreamer1.0-plugins-ugly \
                        libgstreamer-plugins-base1.0-dev \
                        libgstrtspserver-1.0-dev \
-                       xvfb && \
+                       xvfb \
+                       numpy && \
     apt-get -y autoremove && \
     apt-get clean autoclean && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
 RUN pip3 install empy \
                  jinja2 \
-                 numpy \
                  packaging \
                  pyros-genmsg \
                  toml \
