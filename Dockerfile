@@ -28,7 +28,7 @@ RUN apt-get update && \
                        libgstreamer-plugins-base1.0-dev \
                        libgstrtspserver-1.0-dev \
                        xvfb \
-                       numpy && \
+                       python3-numpy && \
     apt-get -y autoremove && \
     apt-get clean autoclean && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
