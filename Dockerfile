@@ -13,6 +13,7 @@ RUN apt-get update && \
                        cmake \
                        curl \
                        git \
+                       iproute2 \
                        libeigen3-dev \
                        libopencv-dev \
                        libroscpp-dev \
@@ -40,7 +41,7 @@ RUN pip3 install empy \
                  toml \
                  pyyaml
 
-RUN git clone https://github.com/PX4/Firmware.git ${FIRMWARE_DIR}
+RUN git clone https://github.com/PX4/PX4-Autopilot.git ${FIRMWARE_DIR}
 RUN git -C ${FIRMWARE_DIR} checkout master
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 

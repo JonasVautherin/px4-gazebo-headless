@@ -23,6 +23,10 @@ function get_vm_host_ip {
     echo "$(getent hosts host.docker.internal | awk '{ print $1 }')"
 }
 
+function get_host_ip {
+    echo "$(ip route | awk '/default/ { print $3 }')"
+}
+
 if [ "$#" -eq 1 ]; then
     if ! is_ip_valid $1; then exit 1; fi
     echo "14540 will be associated to $1"
@@ -43,11 +47,13 @@ if is_docker_vm; then
     VM_HOST=$(get_vm_host_ip)
     QGC_PARAM=${QGC_PARAM:-"-t ${VM_HOST}"}
     API_PARAM=${API_PARAM:-"-t ${VM_HOST}"}
+else
+    HOST=$(get_host_ip)
+    QGC_PARAM=${QGC_PARAM:-"-t ${HOST}"}
+    API_PARAM=${API_PARAM:-"-t ${HOST}"}
 fi
 
-CONFIG_FILE=${FIRMWARE_DIR}/build/px4_sitl_default/etc/init.d-posix/rcS
+CONFIG_FILE=${FIRMWARE_DIR}/build/px4_sitl_default/etc/init.d-posix/px4-rc.mavlink
 
 sed -i "s/mavlink start \-x \-u \$udp_gcs_port_local -r 4000000/mavlink start -x -u \$udp_gcs_port_local -r 4000000 ${QGC_PARAM}/" ${CONFIG_FILE}
-sed -i "s/mavlink start \-x \-u \$udp_offboard_port_local -r 4000000 -m onboard -o \$udp_offboard_port_remote/mavlink start -x -u \$udp_offboard_port_local -r 4000000 -o \$udp_offboard_port_remote ${API_PARAM}/" ${CONFIG_FILE}
-
-echo 'param set MAV_BROADCAST 1' >> ${CONFIG_FILE}
+sed -i "s/mavlink start \-x \-u \$udp_offboard_port_local -r 4000000/mavlink start -x -u \$udp_offboard_port_local -r 4000000 ${API_PARAM}/" ${CONFIG_FILE}
