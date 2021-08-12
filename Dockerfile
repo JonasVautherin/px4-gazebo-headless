@@ -12,24 +12,25 @@ RUN apt-get update && \
     apt-get install -y bc \
                        cmake \
                        curl \
-                       git \
-                       iproute2 \
-                       libeigen3-dev \
-                       libopencv-dev \
-                       libroscpp-dev \
-                       protobuf-compiler \
-                       python3-pip \
-                       unzip \
                        gazebo9 \
-                       libgazebo9-dev \
+                       git \
                        gstreamer1.0-plugins-bad \
                        gstreamer1.0-plugins-base \
                        gstreamer1.0-plugins-good \
                        gstreamer1.0-plugins-ugly \
+                       iproute2 \
+                       libeigen3-dev \
+                       libgazebo9-dev \
                        libgstreamer-plugins-base1.0-dev \
                        libgstrtspserver-1.0-dev \
-                       xvfb \
-                       python3-numpy && \
+                       libopencv-dev \
+                       libroscpp-dev \
+                       protobuf-compiler \
+                       python3-jsonschema \
+                       python3-numpy \
+                       python3-pip \
+                       unzip \
+                       xvfb && \
     apt-get -y autoremove && \
     apt-get clean autoclean && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
