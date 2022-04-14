@@ -2,11 +2,22 @@ name: Publish Docker
 on:
   push:
     branches:
-      - 'master'
+    - 'master'
     tags:
-      - 'v*'
+    - 'v*'
+  pull_request:
+    branches:
+    - '*'
 
 jobs:
+  build-pr:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+    - uses: actions/checkout@master
+    - name: Build
+      run: docker build .
+
   publish-latest:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
