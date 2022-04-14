@@ -36,7 +36,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
 RUN pip3 install empy \
+                 future \
                  jinja2 \
+                 kconfiglib \
                  packaging \
                  pyros-genmsg \
                  toml \
