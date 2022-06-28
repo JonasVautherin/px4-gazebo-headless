@@ -35,7 +35,8 @@ RUN apt-get update && \
     apt-get clean autoclean && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
-RUN pip3 install empy \
+RUN pip3 install --upgrade pip && \
+    pip3 install empy \
                  future \
                  jinja2 \
                  kconfiglib \
@@ -45,7 +46,7 @@ RUN pip3 install empy \
                  pyyaml
 
 RUN git clone https://github.com/PX4/PX4-Autopilot.git ${FIRMWARE_DIR}
-RUN git -C ${FIRMWARE_DIR} checkout master
+RUN git -C ${FIRMWARE_DIR} checkout main
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
 COPY edit_rcS.bash ${WORKSPACE_DIR}
