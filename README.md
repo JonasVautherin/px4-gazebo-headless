@@ -117,3 +117,17 @@ The container automatically detects if it is running inside Docker for Windows/M
 ```
 docker run --rm -it jonasvautherin/px4-gazebo-headless:1.13.0 10.0.2.2 10.0.2.2
 ```
+
+### It doesn't connect with Podman
+
+__Problem:__
+
+Using podman, the MAVLink traffic for port 14550 (and 14540) does not seem to arrive in QGroundControl (and MAVSDK).
+
+__Solution:__
+
+Try to use the "host network" mode and set the MAVLink interfaces for both interfaces.
+
+```
+podman run --rm --network host -it jonasvautherin/px4-gazebo-headless:1.13.0 127.0.0.1 127.0.0.1
+```
