@@ -44,7 +44,7 @@ jobs:
             type=semver,pattern={{version}}
       # https://github.com/marketplace/actions/build-and-push-docker-images
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           # Supported platforms
           platforms: linux/amd64,linux/arm64/v8
