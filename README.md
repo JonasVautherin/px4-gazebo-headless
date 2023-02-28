@@ -58,7 +58,7 @@ The start location can be set when running the container by setting the followin
 For instance:
 
 ```
-docker run --rm -it --env PX4_HOME_LAT=47.397742 --env PX4_HOME_LON=8.545594 --env PX4_HOME_ALT=488.0 jonasvautherin/px4-gazebo-headless:v1.13.2
+docker run --rm -it --env PX4_HOME_LAT=47.397742 --env PX4_HOME_LON=8.545594 --env PX4_HOME_ALT=488.0 jonasvautherin/px4-gazebo-headless:1.13.2
 ```
 
 ## Manual build
