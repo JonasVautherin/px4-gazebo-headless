@@ -46,6 +46,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
+          context: .
           # Supported platforms
           platforms: linux/amd64,linux/arm64/v8
           # Do not push for pull requests
