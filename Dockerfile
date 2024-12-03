@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 ENV WORKSPACE_DIR /root
 ENV FIRMWARE_DIR ${WORKSPACE_DIR}/Firmware
@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get install -y bc \
                        cmake \
                        curl \
-                       gazebo9 \
+                       gazebo \
                        git \
                        gstreamer1.0-plugins-bad \
                        gstreamer1.0-plugins-base \
@@ -20,7 +20,7 @@ RUN apt-get update && \
                        gstreamer1.0-plugins-ugly \
                        iproute2 \
                        libeigen3-dev \
-                       libgazebo9-dev \
+                       libgazebo-dev \
                        libgstreamer-plugins-base1.0-dev \
                        libgstrtspserver-1.0-dev \
                        libopencv-dev \
