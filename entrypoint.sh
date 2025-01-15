@@ -32,8 +32,8 @@ function get_ip {
 
 OPTIND=1 # Reset in case getopts has been used previously in the shell.
 
-vehicle=iris
-world=empty
+vehicle=gz_x500
+world=default
 
 while getopts "h?v:w:" opt; do
     case "$opt" in
@@ -65,5 +65,4 @@ Xvfb :99 -screen 0 1600x1200x24+32 &
 ${SITL_RTSP_PROXY}/build/sitl_rtsp_proxy &
 
 source ${WORKSPACE_DIR}/edit_rcS.bash ${IP_API} ${IP_QGC} &&
-cd ${FIRMWARE_DIR} &&
-HEADLESS=1 make px4_sitl gazebo_${vehicle}__${world}
+HEADLESS=1 PX4_SIM_MODEL=${vehicle} PX4_GZ_WORLD=${world} ${FIRMWARE_DIR}/build/bin/px4

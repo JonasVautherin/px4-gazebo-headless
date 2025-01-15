@@ -41,10 +41,16 @@ where `192.168.0.10` should be replaced by the IP listening on the QGC port 1455
 
 ### Exposing a video stream
 
-When running with the Typhoon H480 vehicle (with `-v typhoon_h480`), a video stream will be available. Expose it with e.g. `-p 8554:8554`, like so:
+When running with the `gz_x500_mono_cam` vehicle (with `-v gz_x500_mono_cam`), a video stream will be available. Expose it with e.g. `-p 8554:8554`, like so:
 
 ```
-docker run --rm -it -p 8554:8554 jonasvautherin/px4-gazebo-headless:1.16.0 -v typhoon_h480
+docker run --rm -it -p 8554:8554 jonasvautherin/px4-gazebo-headless:1.16.0 -v gz_x500_mono_cam
+```
+
+You can then access it with something like:
+
+```
+gst-launch-1.0 rtspsrc location=rtsp://127.0.0.1:8554/live ! rtph264depay ! avdec_h264 ! videoconvert ! autovideosink
 ```
 
 ### Run with another start location
