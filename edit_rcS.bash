@@ -10,7 +10,7 @@ function is_ip_valid {
 }
 
 function is_docker_vm {
-    getent hosts host.docker.internal >/dev/null 2>&1
+    getent ahostsv4 host.docker.internal >/dev/null 2>&1
     return $?
 }
 
@@ -20,7 +20,7 @@ function get_vm_host_ip {
         exit 1
     fi
 
-    echo "$(getent hosts host.docker.internal | awk '{ print $1 }')"
+    echo "$(getent ahostsv4 host.docker.internal | head -1 |  awk '{ print $1 }')"
 }
 
 function get_host_ip {

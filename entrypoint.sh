@@ -19,7 +19,7 @@ function show_help {
 }
 
 function get_ip {
-    output=$(getent hosts "$1" | awk '{print $1}')
+    output=$(getent hosts "$1" | head -1 | awk '{print $1}')
     if [ -z $output ];
     then
         # No output, assume IP
