@@ -55,5 +55,12 @@ fi
 
 CONFIG_FILE=${FIRMWARE_DIR}/build/px4_sitl_default/etc/init.d-posix/px4-rc.mavlink
 
-sed -i "s/mavlink start \-x \-u \$udp_gcs_port_local -r 4000000/mavlink start -x -u \$udp_gcs_port_local -r 4000000 ${QGC_PARAM}/" ${CONFIG_FILE}
-sed -i "s/mavlink start \-x \-u \$udp_offboard_port_local -r 4000000/mavlink start -x -u \$udp_offboard_port_local -r 4000000 ${API_PARAM}/" ${CONFIG_FILE}
+awk -v qgc="${QGC_PARAM}" -v api="${API_PARAM}" '
+    /mavlink start -x -u \$udp_gcs_port_local -r 4000000/ { 
+        print $0" "qgc; next 
+    }
+    /mavlink start -x -u \$udp_offboard_port_local -r 4000000/ { 
+        print $0" "api; next 
+    }
+    { print }
+' "${CONFIG_FILE}" > "${CONFIG_FILE}.tmp" && mv "${CONFIG_FILE}.tmp" "${CONFIG_FILE}"
