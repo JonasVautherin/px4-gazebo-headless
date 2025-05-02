@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV WORKSPACE_DIR /root
 ENV FIRMWARE_DIR ${WORKSPACE_DIR}/Firmware
@@ -9,10 +9,19 @@ ENV DISPLAY :99
 ENV LANG C.UTF-8
 
 RUN apt-get update && \
+    apt-get install -y wget lsb-release && \
+    apt-get -y autoremove && \
+    apt-get clean autoclean && \
+    rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
+
+RUN wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+
+
+RUN apt-get update && \
     apt-get install -y bc \
                        cmake \
-                       curl \
-                       gazebo9 \
+                       gazebo11 \
                        git \
                        gstreamer1.0-plugins-bad \
                        gstreamer1.0-plugins-base \
@@ -20,7 +29,7 @@ RUN apt-get update && \
                        gstreamer1.0-plugins-ugly \
                        iproute2 \
                        libeigen3-dev \
-                       libgazebo9-dev \
+                       libgazebo11-dev \
                        libgstreamer-plugins-base1.0-dev \
                        libgstrtspserver-1.0-dev \
                        libopencv-dev \
