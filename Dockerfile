@@ -8,6 +8,10 @@ ENV DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 ENV DISPLAY :99
 ENV LANG C.UTF-8
 
+# Set environment variables for metadata
+ENV PX4_METADATA=1
+ENV CONFIG_BOARD_CONSTRAINED_FLASH=n
+
 RUN apt-get update && \
     apt-get install -y wget lsb-release && \
     apt-get -y autoremove && \
@@ -67,6 +71,12 @@ RUN ["/bin/bash", "-c", " \
     DONT_RUN=1 make px4_sitl gazebo && \
     DONT_RUN=1 make px4_sitl gazebo \
 "]
+
+# Create metadata directory with proper permissions
+RUN mkdir -p ${FIRMWARE_DIR}/build/px4_sitl_default/component_metadata && \
+    chmod -R 777 ${FIRMWARE_DIR}/build/px4_sitl_default/component_metadata && \
+    cd ${FIRMWARE_DIR} && \
+    DONT_RUN=1 PX4_METADATA=1 CONFIG_BOARD_CONSTRAINED_FLASH=n make px4_sitl_default
 
 COPY sitl_rtsp_proxy ${SITL_RTSP_PROXY}
 RUN cmake -B${SITL_RTSP_PROXY}/build -H${SITL_RTSP_PROXY}
