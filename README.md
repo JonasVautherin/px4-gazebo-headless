@@ -44,7 +44,7 @@ where `192.168.0.10` should be replaced by the IP listening on the QGC port 1455
 When running with the `gz_x500_mono_cam` vehicle (with `-v gz_x500_mono_cam`), a video stream will be available. Expose it with e.g. `-p 8554:8554`, like so:
 
 ```
-docker run --rm -it -p 8554:8554 jonasvautherin/px4-gazebo-headless:1.16.0 -v gz_x500_mono_cam
+docker run --rm -it -p 8554:8554 jonasvautherin/px4-gazebo-headless:latest -v gz_x500_mono_cam
 ```
 
 You can then access it with something like:
