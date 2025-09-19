@@ -1,0 +1,12 @@
+diff --git a/src/lib/events/CMakeLists.txt b/src/lib/events/CMakeLists.txt
+index fcdb971f64..cdf366199c 100644
+--- a/src/lib/events/CMakeLists.txt
++++ b/src/lib/events/CMakeLists.txt
+@@ -57,6 +57,7 @@ add_custom_command(OUTPUT ${generated_events_px4_file}
+ 		${PX4_SOURCE_DIR}/Tools/px4events/jsonout.py
+ 		${PX4_SOURCE_DIR}/Tools/px4events/srcparser.py
+ 		${PX4_SOURCE_DIR}/Tools/px4events/srcscanner.py
++		modules__uxrce_dds_client
+ 		prebuild_targets # ensure all generated source files exist
+ 	COMMENT "Generating px4 event json file from source"
+ )
