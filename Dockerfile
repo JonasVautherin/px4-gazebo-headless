@@ -45,7 +45,7 @@ RUN apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
 RUN git clone https://github.com/PX4/PX4-Autopilot.git ${FIRMWARE_DIR}
-RUN git -C ${FIRMWARE_DIR} checkout main
+RUN git -C ${FIRMWARE_DIR} checkout v1.16.1
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
 COPY fix-cmake-build.patch ${FIRMWARE_DIR}
