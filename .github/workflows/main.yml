@@ -102,6 +102,12 @@ jobs:
             echo "README already documents ${new}, nothing to do"
             exit 0
           fi
+          # A maintenance release of an older series must not downgrade the
+          # documented version.
+          if [ "$(printf '%s\n%s\n' "$old" "$new" | sort -V | tail -1)" = "$old" ]; then
+            echo "README documents ${old}, which is newer than ${new}, nothing to do"
+            exit 0
+          fi
           echo "Updating the README from ${old} to ${new}"
           sed -i "s/${old//./\\.}/${new}/g" README.md
           git diff --stat
