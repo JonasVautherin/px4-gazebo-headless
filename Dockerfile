@@ -44,8 +44,14 @@ RUN apt-get -y autoremove && \
     apt-get clean autoclean && \
     rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
+# Which PX4-Autopilot revision to build: a branch, tag or commit. Defaults to
+# the upstream development branch; the CI passes the released tag (e.g. v1.17.0)
+# when building from a v* tag of this repository. Declared here rather than at
+# the top of the file so that changing it does not invalidate the apt layers.
+ARG PX4_VERSION=main
+
 RUN git clone https://github.com/PX4/PX4-Autopilot.git ${FIRMWARE_DIR}
-RUN git -C ${FIRMWARE_DIR} checkout main
+RUN git -C ${FIRMWARE_DIR} checkout ${PX4_VERSION}
 RUN git -C ${FIRMWARE_DIR} submodule update --init --recursive
 
 COPY fix-cmake-build.patch ${FIRMWARE_DIR}

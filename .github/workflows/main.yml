@@ -13,6 +13,23 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
+      # A `v{xx.yy.zz}` tag of this repository builds the PX4 release of the
+      # same name; anything else builds the upstream development branch.
+      - name: Determine the PX4 version to build
+        id: px4
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            tag="${{ github.ref_name }}"
+            if [[ ! "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "ERROR: tag '$tag' is invalid, expected vX.Y.Z"
+              exit 1
+            fi
+            px4_version="$tag"
+          else
+            px4_version="main"
+          fi
+          echo "Building PX4 ${px4_version}"
+          echo "px4_version=${px4_version}" >> "$GITHUB_OUTPUT"
       # Checkout repository
       - uses: actions/checkout@v6
       # https://github.com/docker/setup-qemu-action
@@ -47,6 +64,9 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
+          # PX4 revision to check out, defined in the `px4` step
+          build-args: |
+            PX4_VERSION=${{ steps.px4.outputs.px4_version }}
           # Supported platforms
           platforms: linux/amd64,linux/arm64/v8
           # Do not push for pull requests
@@ -54,3 +74,46 @@ jobs:
           # Tags and labels defined in `meta` step
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  # Once the image for a `v{xx.yy.zz}` tag is published, point the README at it.
+  # This lands on `master` as a separate commit, so the tag itself still carries
+  # the README of the previous release.
+  update-readme:
+    needs: main
+    if: github.event_name == 'push' && github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: master
+      - name: Bump the version in the README
+        run: |
+          new="${GITHUB_REF_NAME#v}"
+          # The version badge is the source of truth for the version currently
+          # documented, and every other mention uses the same string.
+          old=$(sed -n 's#.*docker/v/jonasvautherin/px4-gazebo-headless/\([0-9][0-9.]*\).*#\1#p' README.md | head -1)
+          if [ -z "$old" ]; then
+            echo "ERROR: could not read the documented version from the README badge"
+            exit 1
+          fi
+          if [ "$old" = "$new" ]; then
+            echo "README already documents ${new}, nothing to do"
+            exit 0
+          fi
+          echo "Updating the README from ${old} to ${new}"
+          sed -i "s/${old//./\\.}/${new}/g" README.md
+          git diff --stat
+      - name: Commit and push
+        run: |
+          if git diff --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # [skip ci] because a README change cannot affect the image, and a
+          # push to master would otherwise rebuild `latest` from PX4 main.
+          git commit -am "Bump README to ${GITHUB_REF_NAME#v} [skip ci]"
+          git push origin HEAD:master
