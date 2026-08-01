@@ -69,7 +69,7 @@ docker run --rm -it --env PX4_HOME_LAT=47.397742 --env PX4_HOME_LON=8.545594 --e
 
 ## Manual build
 
-Note that a clean build from the `master` branch will pull the latest upstream from the PX4 repository (as can be seen [here](https://github.com/JonasVautherin/px4-gazebo-headless/blob/master/Dockerfile#L26)). In order to build a stable version, change `master` for a tag (e.g. `v1.17.0`) in the following commands.
+Note that a clean build from the `master` branch will pull the latest upstream from the PX4 repository (as can be seen in the [Dockerfile](https://github.com/JonasVautherin/px4-gazebo-headless/blob/master/Dockerfile)). In order to build a stable version, change `master` for a tag (e.g. `v1.17.0`) in the following commands.
 
 ### Build the image from this git repository:
 
@@ -77,14 +77,10 @@ Note that a clean build from the `master` branch will pull the latest upstream f
 docker build https://github.com/JonasVautherin/px4-gazebo-headless.git#master -t px4-gazebo-headless
 ```
 
-The starting location of the drone can be set at build time using build arguments (by default the drone is in Zuerich). The possible build arguments are:
-
-* __HOME_LAT:__ starting latitude of the drone (defaults to 47.397742).
-* __HOME_LON:__ starting longitude of the drone (defaults to 8.545594).
-* __HOME_ALT:__ starting altitude of the drone (defaults to 488.0).
-
-Build arguments can be added to the above command line as follows:
+The PX4 revision to build can be set with the `PX4_VERSION` build argument. It accepts any branch, tag or commit of [PX4-Autopilot](https://github.com/PX4/PX4-Autopilot), and defaults to `main`:
 
 ```
-docker build https://github.com/JonasVautherin/px4-gazebo-headless.git#master --build-arg HOME_LAT=37.873350 --build-arg HOME_LON=-122.302525 --build-arg HOME_ALT=20 -t px4-gazebo-headless
+docker build https://github.com/JonasVautherin/px4-gazebo-headless.git#master --build-arg PX4_VERSION=v1.17.0 -t px4-gazebo-headless
 ```
+
+Note that the patches applied in this repository are kept in sync with the latest supported release, so building an older PX4 version may fail.
